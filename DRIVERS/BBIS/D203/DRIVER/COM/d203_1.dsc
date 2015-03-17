@@ -1,19 +1,19 @@
 #************************** BBIS3 board descriptor **************************
 #
-#        Author: dieter.pfeuffer@men.de
-#         $Date: 2006/08/29 13:30:09 $
+#        Author: ds
+#         $Date: 2003/06/12 08:52:32 $
 #     $Revision: 1.1 $
 #
-#   Description: Metadescriptor for D203_A24_SW
+#   Description: Metadescriptor for D203
 #
 #****************************************************************************
 
-D203_A24_SW_1 {
+D203_1 {
 	#------------------------------------------------------------------------
 	#	general parameters (don't modify)
 	#------------------------------------------------------------------------
-    DESC_TYPE           = U_INT32  2		   # descriptor type (2=board)
-    HW_TYPE             = STRING   D203_A24_SW # hardware name of device
+    DESC_TYPE           = U_INT32  2		# descriptor type (2=board)
+    HW_TYPE             = STRING   D203		# hardware name of device
 
 	#------------------------------------------------------------------------
 	#	PCI configuration
