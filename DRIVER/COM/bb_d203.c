@@ -179,11 +179,12 @@ typedef struct {
 	u_int32	pciDev;					/* PCI device number			*/
 	u_int8	pciPath[MAX_PCI_PATH];	/* PCI path from desc			*/
 	u_int32	pciPathLen;				/* number of bytes in pciPath	*/
-	void*		bar0;					/* base address from BAR0		*/
+	volatile void*		bar0;				/* base address from BAR0		*/
 	/* used resources */
-	void*		virtCtrlBase[BRD_MODULE_NBR];	/* virtual ctrl-reg base addr of modules */
+	volatile void*	virtCtrlBase[BRD_MODULE_NBR];	/* virtual ctrl-reg base addr of modules */
 	int32		irqLevel;	/* interrupt level	*/
 	int32		irqVector;	/* interrupt vector	*/
+	int32		bHwFound;	/* set to 1 if actual PCI device found */
 	/* trigger */
 	u_int32	trigPxiSrc;					/* PXI_TRIG_SRC value */
 	u_int32	trigPxiDst;					/* PXI_TRIG_DST value */
@@ -583,12 +584,17 @@ static int32 D203_Init(
 					brdHdl->pciDev, 0, OSS_PCI_DEVICE_ID, &id )) )
 		return( Cleanup(brdHdl,status) );
 
-	/* verify device-id */
-	if( id != BRD_PCI_DEV_ID ){
-		DBGWRT_ERR((DBH, "*** BB - %s_Init: illegal device-id=0x%4x\n",
-			BRD_NAME, id));
+		/* verify device-id - is the HW found at all ? */
+		if( id != BRD_PCI_DEV_ID )
+		{
+			DBGWRT_ERR((DBH, "*** BB - %s_Init: illegal device-id=0x%4x\n",	BRD_NAME, id));
+			brdHdl->bHwFound = 0;
 		return( Cleanup(brdHdl,ERR_BBIS_ILL_ID) );
-	}
+		} 
+                else
+		{
+			brdHdl->bHwFound = 1;
+	        }
 	}
 
 	/*-------------------------------------------+
@@ -1553,15 +1559,20 @@ static int32 Cleanup(
 	/*------------------------------+
 	|	unmap addresses				|
 	+------------------------------*/
-	/* unmap already mapped control register spaces */
+
+	/* unmap already mapped control register spaces - of course only if HW was found at all */
+	if (brdHdl->bHwFound == 1)
+	{
 	for ( i=0; i<BRD_MODULE_NBR; i++)
-		if( brdHdl->virtCtrlBase[i] )
-			OSS_UnMapVirtAddr( brdHdl->osHdl, &brdHdl->virtCtrlBase[i],
-				BRD_CTRL_SIZE, OSS_ADDRSPACE_MEM );
+	    if( brdHdl->virtCtrlBase[i] != NULL)
+		OSS_UnMapVirtAddr( brdHdl->osHdl, &brdHdl->virtCtrlBase[i], BRD_CTRL_SIZE, OSS_ADDRSPACE_MEM );
+	}
+
 
 	/*------------------------------+
 	|	unassign resources			 |
 	+------------------------------*/
+	
 #ifdef OSS_HAS_UNASSIGN_RESOURCES
 	if( brdHdl->resourcesAssigned ){
 		OSS_RESOURCES	res[BRD_MODULE_NBR];
