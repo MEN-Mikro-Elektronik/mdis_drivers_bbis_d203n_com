@@ -197,7 +197,7 @@ typedef struct {
 /* include files which need BBIS_HANDLE */
 #include <MEN/bb_entry.h>	/* bbis jumptable			*/
 #include <MEN/bb_d203.h>	/* D203 bbis header file	*/
-#include "d203_int.h"		/* D203 specific defines	*/ 
+#include "d203_int.h"		/* D203 specific defines	*/
 
 /*------------------------------------------+
  |	PROTOTYPES								|
@@ -436,7 +436,7 @@ static int32 D203_Init(
 	/*--------------------------------------------------------+
 	 |	parse the PCI_PATH to determine bus number of devices |
 	 +--------------------------------------------------------*/
-#ifdef DBG	
+#ifdef DBG
 	DBGWRT_2((DBH, " PCI_PATH="));
 	for(i=0; i<brdHdl->pciPathLen; i++){
 		DBGWRT_2((DBH, " 0x%x", brdHdl->pciPath[i]));
@@ -590,7 +590,7 @@ static int32 D203_Init(
 			DBGWRT_ERR((DBH, "*** BB - %s_Init: illegal device-id=0x%4x\n",	BRD_NAME, id));
 			brdHdl->bHwFound = 0;
 		return( Cleanup(brdHdl,ERR_BBIS_ILL_ID) );
-		} 
+		}
                 else
 		{
 			brdHdl->bHwFound = 1;
@@ -611,7 +611,7 @@ static int32 D203_Init(
 	res[i].type = OSS_RES_MEM;
 	res[i].u.mem.physAddr =	(void*)(
 					(U_INT32_OR_64)brdHdl->bar0 +
-					BRD_MBASE_OFFSET(i) + 
+					BRD_MBASE_OFFSET(i) +
 					BRD_CTRLR_OFFSET );
 	res[i].u.mem.size = BRD_CTRL_SIZE;
 	}
@@ -642,7 +642,7 @@ static int32 D203_Init(
 	status = OSS_PciGetConfig( osHdl,
 				OSS_MERGE_BUS_DOMAIN(brdHdl->pciBusNbr, brdHdl->pciDomainNbr),
 				brdHdl->pciDev, 0, OSS_PCI_INTERRUPT_LINE, &brdHdl->irqLevel );
-	
+
 	/* no interrupt connected */
 	if( status || (brdHdl->irqLevel == 0xff) )
 		return( Cleanup(brdHdl,ERR_BBIS_NO_IRQ) );
@@ -675,7 +675,7 @@ static int32 D203_BrdInit(
 	u_int32	mSlot;
 
 	DBGWRT_1((DBH, "BB - %s_BrdInit\n",BRD_NAME));
-	
+
 	/* enable global interrupt to detect exception (timeout) interrupts */
 	MSETMASK_D16( brdHdl->virtCtrlBase[0], D203_GCTRL, D203_GCTRL_GIEN );
 
@@ -1018,7 +1018,7 @@ static int32 D203_CfgInfo(
 			u_int32 *vector	= va_arg( argptr, u_int32* );
 			u_int32 *level	= va_arg( argptr, u_int32* );
 			u_int32 *mode	= va_arg( argptr, u_int32* );
-	
+
 			mSlot	= mSlot;	/* dummy access to avoid compiler warning */
 			*vector	= *vector;	/* dummy access to avoid compiler warning */
 			*level	= *level;	/* dummy access to avoid compiler warning */
@@ -1281,7 +1281,7 @@ static int32 D203_GetMAddr(
 				 u_int32		*mSize )
 {
 	u_int32 offset;
-	
+
 	DBGWRT_1((DBH, "BB - %s_GetMAddr: mSlot=0x%04x\n",BRD_NAME,mSlot));
 
 	/*------------------------------+
@@ -1377,7 +1377,7 @@ static int32 D203_SetStat(
 				INT32_OR_64	value32_or_64 )
 {
 	int32	value = (int32)value32_or_64;	/* 32bit value */
-	
+
 	DBGWRT_1((DBH, "BB - %s_SetStat: mSlot=0x%04x code=0x%04x value=0x%x\n",
 		BRD_NAME, mSlot, code, value));
 
@@ -1432,7 +1432,7 @@ static int32 D203_GetStat(
 				INT32_OR_64	*value32_or_64P )
 {
 	int32	*valueP = (int32*)value32_or_64P;	/* pointer to 32bit value */
-	
+
 	DBGWRT_1((DBH, "BB - %s_GetStat: mSlot=0x%04x code=0x%04x\n",BRD_NAME,mSlot,code));
 
 	switch (code) {
@@ -1572,7 +1572,7 @@ static int32 Cleanup(
 	/*------------------------------+
 	|	unassign resources			 |
 	+------------------------------*/
-	
+
 #ifdef OSS_HAS_UNASSIGN_RESOURCES
 	if( brdHdl->resourcesAssigned ){
 		OSS_RESOURCES	res[BRD_MODULE_NBR];
@@ -1599,6 +1599,7 @@ static int32 Cleanup(
 	+------------------------------*/
 	/* release memory for the board handle */
 	OSS_MemFree( brdHdl->osHdl, (int8*)brdHdl, brdHdl->ownMemSize);
+	brdHdl = NULL;
 
 	/*------------------------------+
 	|	return error code			|
@@ -1627,7 +1628,7 @@ static int32 ParsePciPath( BBIS_HANDLE *brdHdl, u_int32 *pciBusNbrP ) 	/* nodoc 
 	for (i=0; i<brdHdl->pciPathLen; i++){
 
 		pciDevNbr = brdHdl->pciPath[i];
-		
+
 		if ( ( i==0 )
 #ifdef OS_HAS_PCI_DOMAINS
 		&& ( 0 != brdHdl->pciDomainNbr )
@@ -1644,7 +1645,7 @@ static int32 ParsePciPath( BBIS_HANDLE *brdHdl, u_int32 *pciBusNbrP ) 	/* nodoc 
 					break; /* found device */
 				}
 			}
-			
+
 			if ( error != ERR_SUCCESS ) { /* device not found */
 				DBGWRT_ERR((DBH,"*** BB - %s: first device 0x%02x in pci bus path "
 				"not found on domain %d!\n",
@@ -1721,7 +1722,7 @@ static int32 PciParseDev(
 	int32 error;
 	int32 pciMainDevNbr;
 	int32 pciDevFunc;
-	
+
 	pciMainDevNbr = pciDevNbr;
 	pciDevFunc = 0;
 
@@ -1735,7 +1736,7 @@ static int32 PciParseDev(
 	/*--- check to see if device present ---*/
 	error = OSS_PciGetConfig( brdHdl->osHdl, pciBusNbr, pciMainDevNbr, pciDevFunc,
 				OSS_PCI_VENDOR_ID, vendorIDP );
-		
+
 	if( error == 0 )
 		error = OSS_PciGetConfig( brdHdl->osHdl, pciBusNbr, pciMainDevNbr, pciDevFunc,
 					OSS_PCI_DEVICE_ID, deviceIDP );
@@ -1754,7 +1755,7 @@ static int32 PciParseDev(
 	if( error )
 		return PciCfgErr(brdHdl,"PciParseDev", error,
 					pciBusNbr,pciDevNbr,OSS_PCI_HEADER_TYPE);
-		
+
 	DBGWRT_2((DBH, " domain %d bus %d dev %d.%d: vend=0x%x devId=0x%x hdrtype %d\n",
 		OSS_DOMAIN_NBR( pciBusNbr ), OSS_BUS_NBR( pciBusNbr ), pciMainDevNbr,
 		pciDevFunc, *vendorIDP, *deviceIDP, *headerTypeP ));
@@ -1771,9 +1772,9 @@ static int32 PciParseDev(
 		return PciCfgErr(brdHdl,"PciParseDev", error,
 					pciBusNbr,pciDevNbr,
 					PCI_SECONDARY_BUS_NUMBER | OSS_PCI_ACCESS_8);
-		
+
 	return ERR_SUCCESS;
-}	
+}
 
 /********************************* PciCfgErr ********************************
  *
@@ -1789,7 +1790,7 @@ static int32 PciParseDev(
  *	Output.....:	return			error code
  *	Globals....:	-
  ****************************************************************************/
-static int32 PciCfgErr( 
+static int32 PciCfgErr(
 				BBIS_HANDLE *brdHdl,
 				char *funcName,
 				int32 error,
@@ -1799,7 +1800,7 @@ static int32 PciCfgErr(
 {
 	int32 pciMainDevNbr;
 	int32 pciDevFunc;
-	
+
 	pciMainDevNbr = pciDevNbr;
 	pciDevFunc = 0;
 
@@ -1821,7 +1822,7 @@ static int32 PciCfgErr(
 /********************************* CfgInfoSlot ******************************
  *
  *	Description:	Fulfils the BB_CfgInfo(BBIS_CFGINFO_SLOT) request
- * 
+ *
  *					The variable-argument list (argptr) contains the following
  *					parameters in the given order:
  *
@@ -1880,7 +1881,7 @@ static int32 PciCfgErr(
  *					characters or blanks. The length of the returned string,
  *					including the terminating null character, must not exceed
  *					BBIS_SLOT_STR_MAXSIZE.
- * 
+ *
  *				Examples:
  *					- M-Module:		"M34", "MS9"
  *					- Onboard-Dev:	"D203_TRIG"
