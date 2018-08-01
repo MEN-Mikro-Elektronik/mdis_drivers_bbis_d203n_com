@@ -594,9 +594,9 @@ static int32 D203_Init(
 
 	/* get device-id */
 	if( (status = OSS_PciGetConfig( osHdl,
-					OSS_MERGE_BUS_DOMAIN(brdHdl->pciBusNbr, brdHdl->pciDomainNbr),
-					brdHdl->pciDev, 0, OSS_PCI_DEVICE_ID, &id )) )
-		return( Cleanup(brdHdl,status) );
+		OSS_MERGE_BUS_DOMAIN(brdHdl->pciBusNbr, brdHdl->pciDomainNbr),
+		brdHdl->pciDev, 0, OSS_PCI_DEVICE_ID, &id )) )
+			return( Cleanup(brdHdl,status) );
 
 		/* verify device-id - is the HW found at all ? */
 		if( id != BRD_PCI_DEV_ID )
@@ -615,7 +615,7 @@ static int32 D203_Init(
 	| get, assign and map module ctrl-reg spaces |
 	+-------------------------------------------*/
 	/* get base address from BAR0 */
-	if( (status = OSS_BusToPhysAddr( osHdl, OSS_BUSTYPE_PCI, &brdHdl->bar0,
+	if( (status = OSS_BusToPhysAddr( osHdl, OSS_BUSTYPE_PCI, (void**)&brdHdl->bar0,
 					 OSS_MERGE_BUS_DOMAIN(brdHdl->pciBusNbr, brdHdl->pciDomainNbr),
 					 brdHdl->pciDev, 0, 0)) )
 	return( Cleanup(brdHdl,status) );
@@ -644,7 +644,7 @@ static int32 D203_Init(
 						res[i].u.mem.physAddr, res[i].u.mem.size,
 						OSS_ADDRSPACE_MEM, OSS_BUSTYPE_PCI,
 						OSS_MERGE_BUS_DOMAIN(brdHdl->pciBusNbr, brdHdl->pciDomainNbr),
-						&brdHdl->virtCtrlBase[i] );
+						(void**)&brdHdl->virtCtrlBase[i] );
 		if( status )
 			return( Cleanup(brdHdl,status) );
 	}
@@ -1579,7 +1579,7 @@ static int32 Cleanup(
 	{
 	for ( i=0; i<BRD_MODULE_NBR; i++)
 	    if( brdHdl->virtCtrlBase[i] != NULL)
-		OSS_UnMapVirtAddr( brdHdl->osHdl, &brdHdl->virtCtrlBase[i], BRD_CTRL_SIZE, OSS_ADDRSPACE_MEM );
+		OSS_UnMapVirtAddr( brdHdl->osHdl, (void**)&brdHdl->virtCtrlBase[i], BRD_CTRL_SIZE, OSS_ADDRSPACE_MEM );
 	}
 
 
