@@ -6,18 +6,8 @@
 #  
 #    Description: Makefile definitions for A24_SW variant of D203 BBIS driver
 #                      
-#---------------------------------[ History ]---------------------------------
-#
-#   $Log: driver_a24_sw.mak,v $
-#   Revision 1.2  2007/06/21 13:02:16  ufranke
-#   fixed
-#    - building variants for VxWorks
-#
-#   Revision 1.1  2006/08/29 13:25:46  DPfeuffer
-#   Initial Revision
-#
 #-----------------------------------------------------------------------------
-#   (c) Copyright 2006 by MEN mikro elektronik GmbH, Nuernberg, Germany 
+#   Copyright (c) 2006-2019, MEN Mikro Elektronik GmbH
 #*****************************************************************************
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

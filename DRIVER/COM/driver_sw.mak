@@ -6,24 +6,8 @@
 #  
 #    Description: Makefile definitions for the D203_SW BBIS driver
 #                      
-#---------------------------------[ History ]---------------------------------
-#
-#   $Log: driver_sw.mak,v $
-#   Revision 1.4  2007/06/21 13:02:18  ufranke
-#   fixed
-#    - building variants for VxWorks
-#
-#   Revision 1.3  2006/08/29 13:25:43  DPfeuffer
-#   D203 define added
-#
-#   Revision 1.2  2003/06/12 08:38:27  kp
-#   use id_sw lib and set ID_SW switch
-#
-#   Revision 1.1  2003/01/28 16:17:21  dschmidt
-#   Initial Revision
-#
 #-----------------------------------------------------------------------------
-#   (c) Copyright 2003 by MEN mikro elektronik GmbH, Nuernberg, Germany 
+#   Copyright (c) 2003-2019, MEN Mikro Elektronik GmbH
 #*****************************************************************************
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

@@ -10,17 +10,9 @@
  *
  *     Switches: ---
  *
- *-------------------------------[ History ]---------------------------------
- *
- * $Log: brd.h,v $
- * Revision 1.2  2006/08/29 13:25:36  DPfeuffer
- * D203_A24 variant added
- *
- * Revision 1.1  2003/01/28 16:17:18  dschmidt
- * Initial Revision
  *
  *---------------------------------------------------------------------------
- * (c) Copyright 2003 by MEN mikro elektronik GmbH, Nuremberg, Germany
+ * Copyright (c) 2003-2019, MEN Mikro Elektronik GmbH
  ******************************************************************************/
 /*
  * This program is free software: you can redistribute it and/or modify

@@ -6,24 +6,8 @@
 #  
 #    Description: Makefile definitions for the D203 BBIS driver
 #                      
-#---------------------------------[ History ]---------------------------------
-#
-#   $Log: driver.mak,v $
-#   Revision 1.4  2008/09/16 18:41:18  CKauntz
-#   Changed copyright
-#
-#   Revision 1.3  2007/06/21 13:02:07  ufranke
-#   fixed
-#    - building variants for VxWorks
-#
-#   Revision 1.2  2006/08/29 13:25:41  DPfeuffer
-#   D203 define added
-#
-#   Revision 1.1  2003/01/28 16:17:20  dschmidt
-#   Initial Revision
-#
 #-----------------------------------------------------------------------------
-#   (c) Copyright 2008 by MEN mikro elektronik GmbH, Nuremberg, Germany 
+#   Copyright (c) 2008-2019, MEN Mikro Elektronik GmbH
 #*****************************************************************************
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
