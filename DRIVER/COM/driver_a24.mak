@@ -1,8 +1,6 @@
 #***************************  M a k e f i l e  *******************************
 #  
 #         Author: dieter.pfeuffer@men.de
-#          $Date: 2007/06/21 13:02:14 $
-#      $Revision: 1.2 $
 #  
 #    Description: Makefile definitions for A24 variant of D203 BBIS driver
 #                      
@@ -24,8 +22,13 @@
 
 
 MAK_NAME=d203_a24
+# the next line is updated during the MDIS installation
+STAMPED_REVISION="mdis_drivers_bbis_d203n_com_01_41-0-g459fc6b-dirty_2019-02-21"
+
+DEF_REVISION=MAK_REVISION=$(STAMPED_REVISION)
 
 MAK_SWITCH=$(SW_PREFIX)MAC_MEM_MAPPED \
+		$(SW_PREFIX)$(DEF_REVISION) \
 		   $(SW_PREFIX)D203_A24=D203_A24 \
 		   $(SW_PREFIX)D203_VARIANT=D203_A24
 		    	 	 

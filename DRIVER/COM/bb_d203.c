@@ -4,8 +4,6 @@
  *		Project: D203 board handler
  *
  *		Author: ds
- *		$Date: 2013/11/28 17:00:24 $
- *		$Revision: 1.18 $
  *
  *	Description: D203 board handler routines for D203/F204/F205 Carrier Boards
  *
@@ -46,7 +44,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-static const char RCSid[]="$Id: bb_d203.c,v 1.18 2013/11/28 17:00:24 ts Exp $";
 
 #define _NO_BBIS_HANDLE		/* bb_defs.h: don't define BBIS_HANDLE struct */
 
@@ -126,6 +123,8 @@ typedef struct {
 /* include files which need BBIS_HANDLE */
 #include <MEN/bb_entry.h>	/* bbis jumptable			*/
 #include <MEN/bb_d203.h>	/* D203 bbis header file	*/
+
+static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 #include "d203_int.h"		/* D203 specific defines	*/
 
 /*------------------------------------------+

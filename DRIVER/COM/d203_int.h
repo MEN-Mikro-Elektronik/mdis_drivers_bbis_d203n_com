@@ -3,8 +3,6 @@
  *         Name: d203_int.h
  *
  *       Author: ds
- *        $Date: 2006/08/29 13:25:38 $
- *    $Revision: 1.2 $
  *
  *  Description: Internal header file for D203 BBIS
  *

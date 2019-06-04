@@ -1,8 +1,6 @@
 #***************************  M a k e f i l e  *******************************
 #  
 #         Author: ds
-#          $Date: 2007/06/21 13:02:18 $
-#      $Revision: 1.4 $
 #  
 #    Description: Makefile definitions for the D203_SW BBIS driver
 #                      
@@ -24,8 +22,13 @@
 
 
 MAK_NAME=d203_sw
+# the next line is updated during the MDIS installation
+STAMPED_REVISION="mdis_drivers_bbis_d203n_com_01_41-0-g459fc6b-dirty_2019-02-21"
+
+DEF_REVISION=MAK_REVISION=$(STAMPED_REVISION)
 
 MAK_SWITCH=$(SW_PREFIX)MAC_MEM_MAPPED \
+		$(SW_PREFIX)$(DEF_REVISION) \
 		   $(SW_PREFIX)MAC_BYTESWAP \
 		   $(SW_PREFIX)D203=D203 \
 		   $(SW_PREFIX)D203_VARIANT=D203_SW \
