@@ -124,8 +124,9 @@ typedef struct {
 #include <MEN/bb_entry.h>	/* bbis jumptable			*/
 #include <MEN/bb_d203.h>	/* D203 bbis header file	*/
 
-static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 #include "d203_int.h"		/* D203 specific defines	*/
+
+static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 
 /*------------------------------------------+
  |	PROTOTYPES								|
@@ -1449,9 +1450,7 @@ static int32 D203_Unused( void )	/* nodoc */
  ****************************************************************************/
 static char* Ident( void )		/* nodoc */
 {
-	return (
-		BRD_NAME
-		"	Base Board Handler: $Id: bb_d203.c,v 1.18 2013/11/28 17:00:24 ts Exp $" );
+	return( (char*) IdentString );
 }
 
 /********************************* Cleanup **********************************
